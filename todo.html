@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script  src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script  src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script  src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>To-Do</title>
+    </head>
+    <body>
+        <div id = "app"></div>
+            <script type="text/babel">  //indicating babel will interpret this JSX for the browser, in most production environments you write JSX, have babel translate it into JavaScript, then deploy the JavaScript, not the JSX
+                                        //so no need to re-compile the code eah time, also in most production environments you put each component in its own Javascript file
+                
+
+                class App extends React.Component {   //note: to add things to the list, copy the list and add the thing into the copy each time
+                    constructor(props){
+                        super(props);
+                        this.state = {
+                            tasks: ["one","two"],
+                            input: ""
+                        }
+                    }
+                    render() {
+                        return (
+                            <div>
+                                <h1>Tasks</h1>
+                                <ul>
+                                    {this.state.tasks.map((task, i) => 
+                                        <li key ={i}>{task}</li>
+                                    
+                        )}
+                                </ul>
+                                <div>
+                                <input onChange={this.handleChange} value={this.state.input}/>
+                                <button onClick={this.addTask}>Add Task</button>
+                                </div>
+                            </div>
+                        );
+                    }
+
+                    handleChange = (event) => {
+                        this.setState({
+                        input: event.target.value});    
+                    }
+
+                    addTask = () => {
+                        this.setState(state => ({
+                            tasks: [...state.tasks,this.state.input],
+                            input: ""
+                        }));
+
+                    }
+                }
+
+                ReactDOM.render(<App />,document.querySelector("#app"));
+            </script>
+        
+    </body>
+</html>
